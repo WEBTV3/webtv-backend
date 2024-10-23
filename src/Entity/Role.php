@@ -19,14 +19,14 @@ class Role
     private ?string $tag = null;
 
     /**
-     * @var Collection<int, User>
+     * @var Collection<int, Members>
      */
-    #[ORM\ManyToMany(targetEntity: User::class, mappedBy: 'role')]
-    private Collection $users;
+    #[ORM\OneToMany(targetEntity: Members::class, mappedBy: 'role')]
+    private Collection $members;
 
     public function __construct()
     {
-        $this->users = new ArrayCollection();
+        $this->members = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -47,27 +47,30 @@ class Role
     }
 
     /**
-     * @return Collection<int, User>
+     * @return Collection<int, Members>
      */
-    public function getUsers(): Collection
+    public function getMembers(): Collection
     {
-        return $this->users;
+        return $this->members;
     }
 
-    public function addUser(User $user): static
+    public function addMember(Members $member): static
     {
-        if (!$this->users->contains($user)) {
-            $this->users->add($user);
-            $user->addRole($this);
+        if (!$this->members->contains($member)) {
+            $this->members->add($member);
+            $member->setRole($this);
         }
 
         return $this;
     }
 
-    public function removeUser(User $user): static
+    public function removeMember(Members $member): static
     {
-        if ($this->users->removeElement($user)) {
-            $user->removeRole($this);
+        if ($this->members->removeElement($member)) {
+            // set the owning side to null (unless already changed)
+            if ($member->getRole() === $this) {
+                $member->setRole(null);
+            }
         }
 
         return $this;

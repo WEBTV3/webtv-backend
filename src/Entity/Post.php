@@ -26,15 +26,8 @@ class Post
     #[ORM\Column]
     private ?\DateTimeImmutable $created_at = null;
 
-    #[ORM\ManyToOne(inversedBy: 'posts')]
-    #[ORM\JoinColumn(nullable: false)]
-    private ?User $created_by = null;
-
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updated_at = null;
-
-    #[ORM\ManyToOne]
-    private ?User $updated_by = null;
 
     #[ORM\Column]
     private ?bool $performance = null;
@@ -98,18 +91,6 @@ class Post
         return $this;
     }
 
-    public function getCreatedBy(): ?User
-    {
-        return $this->created_by;
-    }
-
-    public function setCreatedBy(?User $created_by): static
-    {
-        $this->created_by = $created_by;
-
-        return $this;
-    }
-
     public function getUpdatedAt(): ?\DateTimeInterface
     {
         return $this->updated_at;
@@ -118,18 +99,6 @@ class Post
     public function setUpdatedAt(?\DateTimeInterface $updated_at): static
     {
         $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
-    public function getUpdatedBy(): ?User
-    {
-        return $this->updated_by;
-    }
-
-    public function setUpdatedBy(?User $updated_by): static
-    {
-        $this->updated_by = $updated_by;
 
         return $this;
     }

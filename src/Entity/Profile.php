@@ -20,12 +20,6 @@ class Profile
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $icon = null;
 
-    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
-    private ?\DateTimeInterface $updated_at = null;
-
-    #[ORM\ManyToOne]
-    private ?User $updated_by = null;
-
     public function getId(): ?int
     {
         return $this->id;
@@ -51,30 +45,6 @@ class Profile
     public function setIcon(?string $icon): static
     {
         $this->icon = $icon;
-
-        return $this;
-    }
-
-    public function getUpdatedAt(): ?\DateTimeInterface
-    {
-        return $this->updated_at;
-    }
-
-    public function setUpdatedAt(?\DateTimeInterface $updated_at): static
-    {
-        $this->updated_at = $updated_at;
-
-        return $this;
-    }
-
-    public function getUpdatedBy(): ?User
-    {
-        return $this->updated_by;
-    }
-
-    public function setUpdatedBy(?User $updated_by): static
-    {
-        $this->updated_by = $updated_by;
 
         return $this;
     }
